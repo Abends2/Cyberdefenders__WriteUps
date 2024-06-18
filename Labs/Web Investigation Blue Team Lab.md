@@ -25,17 +25,17 @@ As the lead analyst on this case, you are required to analyze the network traffi
 
 Исходным файлом является файл с названием `WebInvestigation.pcap`, который содержит в себе пакеты захваченного трафика. Первичный осмотр файла показывает, что на веб-ресурс `http://bookworldstore.com` обращается несколько клиентов. Например, клиент, имеющий IP-адрес `73.124.22.98` реализует поиск информации на сайте, используя при этом конечный ресурс `search.php?search=`. Для проверки необходимо найти пакет №245:
 
-![ScreenShot](Labs/screenshots/WebInvestigation-1.png)
+![ScreenShot](screenshots/WebInvestigation-1.png)
 
 >Для того, чтобы просмотреть содержимое пакета, необходимо нажать правой кнопкой мыши на найденный пакет в потоке трафика, далее проследовать в меню "Отслеживать", а затем нажать на "HTTP Stream"
 
 Содержимое пакета №245:
 
-![ScreenShot](Labs/screenshots/WebInvestigation-2.png)
+![ScreenShot](screenshots/WebInvestigation-2.png)
 
 Просматривая трафик далее, стоит отметить, что клиент с IP-адресом `111.224.250.131` реализует вредоносные запросы, внедряя в них SQL-инструкции (пакет №357):
 
-![ScreenShot](Labs/screenshots/WebInvestigation-3.png)
+![ScreenShot](screenshots/WebInvestigation-3.png)
 
 **Answer 1**: `111.224.250.131`
 
@@ -48,7 +48,7 @@ As the lead analyst on this case, you are required to analyze the network traffi
 
 Среди всей информации необходимо найти данные об адресе (местоположении):
 
-![ScreenShot](Labs/screenshots/WebInvestigation-4.png)
+![ScreenShot](screenshots/WebInvestigation-4.png)
 
 **Answer 2**: `Shijiazhuang`
 
@@ -57,7 +57,7 @@ As the lead analyst on this case, you are required to analyze the network traffi
 
 Как уже выявлено ранее, злоумышленник обращается к `http://bookworldstore.com` и реализует SQL-запросы в параметре `?search=`, который обрабатывает скрипт `search.php`:
 
-![ScreenShot](Labs/screenshots/WebInvestigation-5.png)
+![ScreenShot](screenshots/WebInvestigation-5.png)
 
 Инструмент, используемый злоумышленником - `sqlmap/1.8.3#stable`
 
@@ -74,7 +74,7 @@ As the lead analyst on this case, you are required to analyze the network traffi
 
 Это подтверждает TCP-поток №36 (`tcp.stream eq 36`), пакет №357:
 
-![ScreenShot](Labs/screenshots/WebInvestigation-5.png)
+![ScreenShot](screenshots/WebInvestigation-5.png)
 
 **Answer 4**: `/search.php?search=book%20and%201=1;%20--%20-`
 
@@ -89,7 +89,7 @@ As the lead analyst on this case, you are required to analyze the network traffi
 
 Вышеописанный факт подтверждается результатом поиска информации на сайте - ресурс выдан список таблиц при реализации SQL-запроса со стороны злоумышленника, что подтверждает пакет №1525 (TCP-поток №151):
 
-![ScreenShot](Labs/screenshots/WebInvestigation-6.png)
+![ScreenShot](screenshots/WebInvestigation-6.png)
 
 Список полученных таблиц:
 
@@ -110,9 +110,9 @@ As the lead analyst on this case, you are required to analyze the network traffi
 
 Подтверждается упомянутый факт исследованием результатов вредоносных запросов, обнаруженных в HTTP-потоке №154 и №157:
 
-![ScreenShot](Labs/screenshots/WebInvestigation-7.png)
+![ScreenShot](screenshots/WebInvestigation-7.png)
 
-![ScreenShot](Labs/screenshots/WebInvestigation-8.png)
+![ScreenShot](screenshots/WebInvestigation-8.png)
 
 **Answer 6**: `customers`
 
@@ -121,13 +121,13 @@ As the lead analyst on this case, you are required to analyze the network traffi
 
 Дальнейшие действия злоумышленника направлены на исследование директорий веб-ресурса `bookworldstore.com` при помощи инструмента `gobuster/3.6`, что подтверждает HTTP-поток №168:
 
-![ScreenShot](Labs/screenshots/WebInvestigation-9.png)
+![ScreenShot](screenshots/WebInvestigation-9.png)
 
 Для того, чтобы понять, к какой критической директории злоумышленник получил доступ, необходимо произвести экспорт HTTP-объектов. Сделать это необходимо, перейдя в меню "Файл" => "Экспортировать объекты" => "HTTP" и реализовать фильтрацию HTTP-объектов по размеру ответа: 
 
-![ScreenShot](Labs/screenshots/WebInvestigation-10.png)
+![ScreenShot](screenshots/WebInvestigation-10.png)
 
-![ScreenShot](Labs/screenshots/WebInvestigation-11.png)
+![ScreenShot](screenshots/WebInvestigation-11.png)
 
 Можно заметить, что множество ответов от сервера на наличие директории имеют размер `283 bytes`, что свидетельствует о том, что на ресурсе нет запрашиваемой со стороны злоумышленника директории. В свою очередь, некоторые директории, включая директорию `/admin` имеют другую размерность, что свидетельствует о наличии директории на веб-ресурсе.
 
@@ -138,7 +138,7 @@ As the lead analyst on this case, you are required to analyze the network traffi
 
 После нахождения директории `/admin`, злоумышленник обнаружил форму входа `/admin/login.php`. Для входа на ресурс злоумышленник использован следующие данные для входа - `admin:admin123!`. Обнаружение входа подтверждается отслеживанием потока HTTP №647. При вводе указанных аутентификационных данных произошло перенаправление на `/admin/index.php`, что свидетельствует об успешном входе на панель администратора веб-ресурса: 
 
-![ScreenShot](Labs/screenshots/WebInvestigation-12.png)
+![ScreenShot](screenshots/WebInvestigation-12.png)
 
 **Answer 8**: `admin:admin123!`
 
@@ -147,7 +147,7 @@ As the lead analyst on this case, you are required to analyze the network traffi
 
 С целью дальнейшей эксплуатации и закрепления на веб-ресурсе злоумышленник загрузил PHP-скрипт, реализующий технику Reverse Shell (HTTP-поток №650):
 
-![ScreenShot](Labs/screenshots/WebInvestigation-13.png)
+![ScreenShot](screenshots/WebInvestigation-13.png)
 
 Идентификация вредоносного файла:
 

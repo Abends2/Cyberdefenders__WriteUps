@@ -20,7 +20,7 @@ After Karen started working for 'TAAUSAI,' she began to do some illegal activiti
 
 Исследуемый файл - `FirstHack.ad1` - образ жесткого диска. Файл исследуется с применением специализированного ПО `FTK Imager`. Для того, чтобы определить дистрибутив операционной системы, необходимо открыть раздел `boot`
 
-![ScreenShot](Labs/screenshots/Insider-1.png)
+![ScreenShot](screenshots/Insider-1.png)
 
 Внутри `boot` находятся файлы, раскрывающие версию и название дистрибутива операционной системы.
 
@@ -31,11 +31,11 @@ After Karen started working for 'TAAUSAI,' she began to do some illegal activiti
 
 Для того, чтобы определить хэш-сумму файла средствами `FTK Imager` необходимо нажать ПКМ по нужному файлу (`access.log`) и выбрать `Export File Hash List...`
 
-![ScreenShot](Labs/screenshots/Insider-2.png)
+![ScreenShot](screenshots/Insider-2.png)
 
 Далее сохранить файл (формат `.csv`) в любое удобное место и открыть любым текстовым редактором:
 
-![ScreenShot](Labs/screenshots/Insider-3.png)
+![ScreenShot](screenshots/Insider-3.png)
 
 **Answer 2**: `d41d8cd98f00b204e9800998ecf8427e`
 
@@ -44,7 +44,7 @@ After Karen started working for 'TAAUSAI,' she began to do some illegal activiti
 
 Исходя из файлов, найденных в `/root/Downloads/` видно, что злоумышленник скачал инструмент `mimikatz` (`/root/Downloads/mimikatz_trunk.zip`)
 
-![ScreenShot](Labs/screenshots/Insider-4.png)
+![ScreenShot](screenshots/Insider-4.png)
 
 **Answer 3**: `mimikatz_trunk.zip`
 
@@ -53,7 +53,7 @@ After Karen started working for 'TAAUSAI,' she began to do some illegal activiti
 
 При просмотре `.bash_history` (история команд пользователя) относительно пользователя `root` найден абсолютный путь к файла `SuperSecretFile.txt`. При этом в системе этот файл не обнаружен
 
-![ScreenShot](Labs/screenshots/Insider-5.png)
+![ScreenShot](screenshots/Insider-5.png)
 
 **Answer 4**: `/root/Desktop/SuperSecretFile.txt`
 
@@ -62,7 +62,7 @@ After Karen started working for 'TAAUSAI,' she began to do some illegal activiti
 
 Также в ходе исследования истории команд обнаружено, что файл `didyouthinkwedmakeiteasy.jpg` был использован утилитой `binwalk`
 
-![ScreenShot](Labs/screenshots/Insider-6.png)
+![ScreenShot](screenshots/Insider-6.png)
 
 **Answer 5**: `binwalk`
 
@@ -71,7 +71,7 @@ After Karen started working for 'TAAUSAI,' she began to do some illegal activiti
 
 На рабочем столе пользователя `root` обнаружен файл `Checklist`, где в последнем пункте числится `Profit`:
 
-![ScreenShot](Labs/screenshots/Insider-7.png)
+![ScreenShot](screenshots/Insider-7.png)
 
 **Answer 6**: `Profit`
 
@@ -80,7 +80,7 @@ After Karen started working for 'TAAUSAI,' she began to do some illegal activiti
 
 Исходя из истории команд пользователя `root`, а также наличия ПУСТЫХ файлов с логами в `/var/log/apache2`, можно сделать вывод о том, что веб-сервер `Apache` не был запущен ни разу
 
-![ScreenShot](Labs/screenshots/Insider-8.png)
+![ScreenShot](screenshots/Insider-8.png)
 
 **Answer 7**: `0`
 
@@ -89,7 +89,7 @@ After Karen started working for 'TAAUSAI,' she began to do some illegal activiti
 
 В директории `/root` обнаружен скриншот рабочего стола пользователя `Bob`
 
-![ScreenShot](Labs/screenshots/Insider-9.png)
+![ScreenShot](screenshots/Insider-9.png)
 
 **Answer 8**: `irZLAohL.jpeg`
 
@@ -98,7 +98,7 @@ After Karen started working for 'TAAUSAI,' she began to do some illegal activiti
 
 Обнаружено, что bash-скрипт должен был применяться или применялся по отношению к сущности `Young`
 
-![ScreenShot](Labs/screenshots/Insider-10.png)
+![ScreenShot](screenshots/Insider-10.png)
 
 **Answer 9**: `Young`
 
@@ -107,7 +107,7 @@ After Karen started working for 'TAAUSAI,' she began to do some illegal activiti
 
 Исследование пользователей, которые производили попытки аутентификации в 11:26, производится с помощью файла `/var/log/auth.log`
 
-![ScreenShot](Labs/screenshots/Insider-11.png)
+![ScreenShot](screenshots/Insider-11.png)
 
 Как видно на скриншоте в указанное время функционировал пользователь `postgres`
 
@@ -118,7 +118,7 @@ After Karen started working for 'TAAUSAI,' she began to do some illegal activiti
 
 Судя по истории команд, последний переход в директорию осуществлен в `../Documents/myfirsthack/` =>`/root/Documents/myfirsthack/`
 
-![ScreenShot](Labs/screenshots/Insider-12.png)
+![ScreenShot](screenshots/Insider-12.png)
 
 **Answer 11**: `/root/Documents/myfirsthack/`
 

@@ -20,7 +20,7 @@ Your organization's security team has detected a surge in suspicious network act
 
 Исходным файлом является файл с названием `poisoned_credentials.pcap`, который содержит в себе пакеты захваченного трафика. Первичный осмотр файла показывает, что ошибочно введенный запрос можно обнаружить в пакете №47:
 
-![ScreenShot](Labs/screenshots/PoisonedCredentials-1.png)
+![ScreenShot](screenshots/PoisonedCredentials-1.png)
 
 ```
 Queries: FILESHAARE<20>: type NB, class IN
@@ -28,7 +28,7 @@ Queries: FILESHAARE<20>: type NB, class IN
 
 Инициатором запроса является хост с IP-адресом `192.168.232.162`. Запрос отправлена хост с IP-адресом `192.168.232.215`. Собственно, запрос с `FILESHAARE` является ошибочным. В пакете №51 прослеживается ответ от `192.168.232.215` 
 
-![ScreenShot](Labs/screenshots/PoisonedCredentials-2.png)
+![ScreenShot](screenshots/PoisonedCredentials-2.png)
 
 При этом вышеупомянутые IP-адреса не дают целостной картины о том, кто является злоумышленником
 
@@ -39,7 +39,7 @@ Queries: FILESHAARE<20>: type NB, class IN
 
 Стоит обратить внимание на другие NBNS-пакеты. Ниже представлен скриншот, на котором прослеживается конфликт NetBIOS-имен:
 
-![ScreenShot](Labs/screenshots/PoisonedCredentials-3.png)
+![ScreenShot](screenshots/PoisonedCredentials-3.png)
 
 Хост с IP-адресом `192.168.232.176` обращается к `192.168.235.255` (предположительно, контроллер домена). Ответ приходит от 2-х адресов: `192.168.232.215` и `192.168.232.215`. При этом пакет №146 показывает, что происходит конфликт имён (относительно `192.168.232.215`), поэтому, предположительно, IP-адрес злоумышленника - `192.168.232.215`.
 
@@ -50,7 +50,7 @@ Queries: FILESHAARE<20>: type NB, class IN
 
 В исследуемом трафике прослеживается установление сессии SMBv2. Инициатором подключения является хост c IP-адресом `192.168.232.215`. Подключение происходит к хосту с IP-адресом `192.168.232.176`. Этот факт напрямую подтверждает, что злоумышленник имеет IP-адрес `192.168.232.215`. При этом злоумышленник захватил второй хост с IP-адресом `192.168.232.176`
 
-![ScreenShot](Labs/screenshots/PoisonedCredentials-4.png)
+![ScreenShot](screenshots/PoisonedCredentials-4.png)
 
 **Answer 3**: `192.168.232.176`
 
@@ -59,7 +59,7 @@ Queries: FILESHAARE<20>: type NB, class IN
 
 Имя учетной записи, захваченной злоумышленником - `janesmith`. Имя пользователя, относительно которого злоумышленник произвел подключение, представлено в пакете №242:
 
-![ScreenShot](Labs/screenshots/PoisonedCredentials-5.png)
+![ScreenShot](screenshots/PoisonedCredentials-5.png)
 
 **Answer 4**: `janesmith`
 
@@ -68,7 +68,7 @@ Queries: FILESHAARE<20>: type NB, class IN
 
 Принимая во внимание предыдущий пункт, необходимо отметить, что `hostname != WORKSTATION`. Имя хоста раскрывается внутри содержимого пакета №242, в котором содержаться данные о подключении:
 
-![ScreenShot](Labs/screenshots/PoisonedCredentials-6.png)
+![ScreenShot](screenshots/PoisonedCredentials-6.png)
 
 **Answer 5**: `ACCOUNTINGPC`
 

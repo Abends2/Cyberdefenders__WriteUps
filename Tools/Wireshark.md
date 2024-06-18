@@ -123,7 +123,7 @@ http contains "sqlmap"
 Вид => Формат отображения времени => Дата и время суток
 ```
 
-![ScreenShot](Tools/screenshots/1.png)
+![ScreenShot](screenshots/1.png)
 
 # 5. Links
 
